@@ -54,6 +54,11 @@ public:
 
 };
 
+/*对于一个链表，我们需要用一个特定阈值完成对它的分化，使得小于等于这个值的结点移到前面，大于该值的结点在后面，同时保证两类结点内部的位置关系不变。
+给定一个链表的头结点head，同时给定阈值val，请返回一个链表，使小于等于它的结点在前，大于等于它的在后，保证结点值不重复。
+测试样例：
+{1,4,2,5},3
+{1,2,4,5}*/
 
 class Divide {
 public:
@@ -93,6 +98,36 @@ public:
 				
 			return zerohead->next;
 		}
+
+	}
+};
+
+/*现有两个升序链表，且链表中均无重复元素。请设计一个高效的算法，打印两个链表的公共值部分。
+给定两个链表的头指针headA和headB，请返回一个vector，元素为两个链表的公共部分。请保证返回数组的升序。两个链表的元素个数均小于等于500。保证一定有公共值
+测试样例：
+{1,2,3,4,5,6,7},{2,4,6,8,10}
+返回：[2.4.6]*/
+class Common {
+public:
+	vector<int> findCommonParts(ListNode* headA, ListNode* headB) {
+		// write code here
+		vector<int> ans;
+		ListNode *p = headA;
+		ListNode *q = headB;
+		while (p != NULL&&q != NULL){
+			if (p->val<q->val){
+				p = p->next;
+			}
+			else if (p->val>q->val){
+				q = q->next;
+			}
+			else{
+				ans.push_back(p->val);
+				p = p->next;
+				q = q->next;
+			}
+		}
+		return ans;
 
 	}
 };
