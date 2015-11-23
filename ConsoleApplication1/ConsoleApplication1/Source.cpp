@@ -8,6 +8,7 @@
 #include<stdio.h>
 #include<vector>
 #include<iostream>
+#include<stack>
 using namespace std;
 
 struct ListNode {
@@ -132,21 +133,73 @@ public:
 	}
 };
 
+/*有一个单链表，请设计一个算法，使得每K个节点之间逆序，如果最后不够K个节点一组，则不调整最后几个节点。例如链表1->2->3->4->5->6->7->8->null，K=3这个例子。调整后为，3->2->1->6->5->4->7->8->null。因为K==3，所以每三个节点之间逆序，但其中的7，8不调整，因为只有两个节点不够一组。
+给定一个单链表的头指针head,同时给定K值，返回逆序后的链表的头指针。*/
+class KInverse {
+public:
+	ListNode* inverse(ListNode* head, int k) {
+		// write code here
+		ListNode* zerohead = new ListNode(0);
+		ListNode* pre = zerohead;
+		ListNode* temp = head;
+		while (temp != NULL){
+			int i = 0;
+			stack<int> s;
+			ListNode* begin = temp;
+			while (temp != NULL &&i<k){
+				s.push(temp->val);
+				temp = temp->next;
+				i++;
+			}
+			ListNode* tail = temp;
+			int n = s.size();
+			if (n<k){
+				pre->next = begin;
+			}
+			else{
+				for (int j = 0; j<k; j++){
+					ListNode* top = new ListNode(s.top());
+					s.pop();
+					pre->next = top;
+					pre = pre->next;
+				}
+				pre->next = tail;
+			}
+		}
+		return zerohead->next;
+	}
+};
+
+
+
 int main(){
 	//InsertValue test;
 	//vector<int> A = { 1, 3, 4, 5, 7 }; vector<int> nxt = { 1, 2, 3, 4, 0 }; int val = 2;
 	//ListNode* ans = test.insert(A, nxt, val);
 
-	Divide test;
-	vector<int> A = { 360,220,2 }; int val = 2;
-	int n = A.size();
+
+
+
+	//vector<int> A = { 360,220,2 }; int val = 2;
+	
+
+	//Divide test;
+	//ListNode *ans = test.listDivide(head, val);
+	
+
+	
+	vector<int> A = { 1, 3, 4, 5, 7 }; int k = 3;
+
+	int n = A.size();	
 	ListNode *head = new ListNode(A[0]);
 	ListNode *temp = head;
 	for (int i = 1; i < n; i++) { //构成链表
 		temp->next = new ListNode(A[i]);
 		temp = temp->next;
 	}
-	ListNode *ans = test.listDivide(head, val);
+
+	KInverse test;
+	ListNode *ans = test.inverse(head, k);
 
 	
 	temp = ans;
