@@ -64,36 +64,37 @@ public:
 			return node;
 		}
 		else{
-			ListNode *listF, *listB, *p, *q, *temp;
-			bool flagF=0,flagB=0;
-			temp = head;
-			while (temp != NULL){
-				if (temp->val<val){
-					if (flagF == 0){ listF = temp; p =listF; flagF = 1; }
-					else{ p->next = temp; p = p->next; }
-					
-				}
-				else if (temp->val>val){
-					if (flagB == 0){ listB = temp; q = listB; flagB = 1; }
-					else{ q->next = temp;
-					q = q->next; }
-					
-				}
+			ListNode* temp = head;
+			int n = 1;
+			while (temp->next != NULL){
 				temp = temp->next;
+				n++;
 			}
-			if (listF != NULL&&listB != NULL){
-				head = listF;
-				p = node;
-				node->next = listB;
-			}
-			else if (listF != NULL){
-				head = listF;
-				p = node;
-			}
-			else if (listB != NULL){
-				head = node;
-				node->next = listB;
-			}
+			temp->next = node;//°Ñval·ÅÔÚÁ´Î²
+			ListNode* tail = node;
+			ListNode* zerohead = new ListNode(0);
+			zerohead->next = head;
+			ListNode* pre = zerohead;
+			ListNode* cur = zerohead->next;
+			for (int i=0;i<n;i++){
+				if (cur->val >val){
+					pre->next = cur->next;
+					temp = cur;
+					cur = cur->next;
+					temp->next = NULL;
+					tail->next = temp;
+					tail = tail->next;
+				}
+				else if (cur->val ==val){
+					pre->next = cur->next;
+					cur = cur->next;
+				}
+				else{
+					pre = pre->next;
+					cur = cur->next;
+				}
+				
+			}			
 			return head;
 		}
 
