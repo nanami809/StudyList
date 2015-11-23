@@ -70,8 +70,7 @@ public:
 				temp = temp->next;
 				n++;
 			}
-			temp->next = node;//°Ñval·ÅÔÚÁ´Î²
-			ListNode* tail = node;
+			ListNode* tail = temp;
 			ListNode* zerohead = new ListNode(0);
 			zerohead->next = head;
 			ListNode* pre = zerohead;
@@ -85,17 +84,14 @@ public:
 					tail->next = temp;
 					tail = tail->next;
 				}
-				else if (cur->val ==val){
-					pre->next = cur->next;
-					cur = cur->next;
-				}
 				else{
 					pre = pre->next;
 					cur = cur->next;
-				}
+				}				
+			}
+		
 				
-			}			
-			return head;
+			return zerohead->next;
 		}
 
 	}
@@ -107,7 +103,7 @@ int main(){
 	//ListNode* ans = test.insert(A, nxt, val);
 
 	Divide test;
-	vector<int> A = { 1, 4, 2, 5 }; int val = 2;
+	vector<int> A = { 360,220,2 }; int val = 2;
 	int n = A.size();
 	ListNode *head = new ListNode(A[0]);
 	ListNode *temp = head;
