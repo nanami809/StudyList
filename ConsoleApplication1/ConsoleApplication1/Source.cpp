@@ -54,12 +54,70 @@ public:
 
 };
 
-int main(){
-	InsertValue test;
-	vector<int> A = { 1, 3, 4, 5, 7 }; vector<int> nxt = { 1, 2, 3, 4, 0 }; int val = 2;
 
-	ListNode* ans = test.insert(A, nxt, val);
-	ListNode* temp = ans;
+class Divide {
+public:
+	ListNode* listDivide(ListNode* head, int val) {
+		// write code here
+		ListNode* node = new ListNode(val);
+		if (head == NULL){
+			return node;
+		}
+		else{
+			ListNode *listF, *listB, *p, *q, *temp;
+			bool flagF=0,flagB=0;
+			temp = head;
+			while (temp != NULL){
+				if (temp->val<val){
+					if (flagF == 0){ listF = temp; p =listF; flagF = 1; }
+					else{ p->next = temp; p = p->next; }
+					
+				}
+				else if (temp->val>val){
+					if (flagB == 0){ listB = temp; q = listB; flagB = 1; }
+					else{ q->next = temp;
+					q = q->next; }
+					
+				}
+				temp = temp->next;
+			}
+			if (listF != NULL&&listB != NULL){
+				head = listF;
+				p = node;
+				node->next = listB;
+			}
+			else if (listF != NULL){
+				head = listF;
+				p = node;
+			}
+			else if (listB != NULL){
+				head = node;
+				node->next = listB;
+			}
+			return head;
+		}
+
+	}
+};
+
+int main(){
+	//InsertValue test;
+	//vector<int> A = { 1, 3, 4, 5, 7 }; vector<int> nxt = { 1, 2, 3, 4, 0 }; int val = 2;
+	//ListNode* ans = test.insert(A, nxt, val);
+
+	Divide test;
+	vector<int> A = { 1, 4, 2, 5 }; int val = 2;
+	int n = A.size();
+	ListNode *head = new ListNode(A[0]);
+	ListNode *temp = head;
+	for (int i = 1; i < n; i++) { //¹¹³ÉÁ´±í
+		temp->next = new ListNode(A[i]);
+		temp = temp->next;
+	}
+	ListNode *ans = test.listDivide(head, val);
+
+	
+	temp = ans;
 	while (temp != NULL){
 		cout << temp->val;
 		temp = temp->next;
