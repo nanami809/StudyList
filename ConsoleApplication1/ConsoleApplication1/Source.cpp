@@ -1,15 +1,21 @@
-有一个整数val，如何在节点值有序的环形链表中插入一个节点值为val的节点，并且保证这个环形单链表依然有序。
+/*有一个整数val，如何在节点值有序的环形链表中插入一个节点值为val的节点，并且保证这个环形单链表依然有序。
 给定链表的信息，及元素的值A及对应的nxt指向的元素编号同时给定val，请构造出这个环形链表，并插入该值。
 测试样例：
 [1, 3, 4, 5, 7], [1, 2, 3, 4, 0], 2
-返回：{ 1, 2, 3, 4, 5, 7 }
+返回：{ 1, 2, 3, 4, 5, 7 }*/
 
-/*
+
+#include<stdio.h>
+#include<vector>
+#include<iostream>
+using namespace std;
+
 struct ListNode {
 int val;
 struct ListNode *next;
 ListNode(int x) : val(x), next(NULL) {}
-};*/
+};
+
 class InsertValue {
 public:
 	ListNode* insert(vector<int> A, vector<int> nxt, int val) {
@@ -47,3 +53,17 @@ public:
 	}
 
 };
+
+int main(){
+	InsertValue test;
+	vector<int> A = { 1, 3, 4, 5, 7 }; vector<int> nxt = { 1, 2, 3, 4, 0 }; int val = 2;
+
+	ListNode* ans = test.insert(A, nxt, val);
+	ListNode* temp = ans;
+	while (temp != NULL){
+		cout << temp->val;
+		temp = temp->next;
+	}
+	
+	return 0;
+}
