@@ -171,6 +171,54 @@ public:
 };
 
 
+class Palindrome {
+public:
+	bool isPalindrome(ListNode* pHead) {
+		// write code here
+		if (pHead == NULL || pHead->next == NULL) return pHead;
+		ListNode *slow = pHead, *fast = pHead, *qHead;
+		while (fast->next!=NULL&&fast->next->next != NULL){
+			slow = slow->next;
+			fast = fast->next->next;
+		}
+		if (fast->next != NULL){//双数
+			qHead = slow->next;
+			slow->next = NULL;
+			if (qHead->next == NULL){//2个结点
+				if (pHead->val == qHead->val) return true;
+				else return false;
+			}
+
+		}
+		else{ //单数
+			qHead = slow;
+			if (qHead->next->next == NULL){//3个结点
+				if (pHead->val == qHead->next->val) return true;
+				else return false;
+			}
+		}
+		ListNode *zeroHead = new ListNode(0);
+		ListNode *temp1 = qHead, *temp2;
+		while (temp1 != NULL){
+			temp2 = zeroHead->next;
+			zeroHead->next = temp1;
+			qHead = qHead->next;
+			temp1->next = temp2;
+			temp1 = qHead;
+		}
+		qHead = zeroHead->next;
+		ListNode *p = pHead, *q = qHead;
+		while (p != NULL&&q != NULL){
+			if (p->val != q->val) return false;
+			p = p->next;
+			q = q->next;
+		}
+		return true;
+
+	}
+};
+
+
 
 int main(){
 	//InsertValue test;
@@ -188,7 +236,7 @@ int main(){
 	
 
 	
-	vector<int> A = { 1, 3, 4, 5, 7 }; int k = 3;
+	vector<int> A = { 1, 3, 4, 3, 1 ,1}; 
 
 	int n = A.size();	
 	ListNode *head = new ListNode(A[0]);
@@ -198,15 +246,18 @@ int main(){
 		temp = temp->next;
 	}
 
-	KInverse test;
-	ListNode *ans = test.inverse(head, k);
+	Palindrome test;
+	bool ans = test.isPalindrome(head);
+	cout << ans;
+	//KInverse test;
+	//ListNode *ans = test.inverse(head, k);
 
-	
-	temp = ans;
+	/*temp = ans;
 	while (temp != NULL){
 		cout << temp->val;
 		temp = temp->next;
-	}
+	}*/
+	
 	
 	return 0;
 }
